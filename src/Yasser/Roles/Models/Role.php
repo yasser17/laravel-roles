@@ -8,15 +8,6 @@ class Role extends Model
 {
     protected $fillable = ['name', 'slug', 'description'];
 
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-
-        if ($connection = config('roles.connection')) {
-            $this->connection = $connection;
-        }
-    }
-
     /**
      * Role belongs to many permissions
      *

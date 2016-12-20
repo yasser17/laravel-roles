@@ -14,15 +14,6 @@ class Permission extends Model
      */
     protected $fillable = ['name', 'slug', 'description', 'model'];
 
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-
-        if ($connection = config('roles.connection')) {
-            $this->connection = $connection;
-        }
-    }
-
     /**
      * Permission belongs to many roles
      *
