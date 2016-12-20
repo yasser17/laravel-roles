@@ -15,7 +15,7 @@ class Role extends Model
      */
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class);
+        return $this->belongsToMany(config('roles.permission', Permission::class));
     }
 
     /**
@@ -30,7 +30,22 @@ class Role extends Model
 
     public function attachPermission(Permission $permission)
     {
-        return !$this->permissions()->get()->contains($permission) ?
-            $this->permissions()->attach($permission) : true;
+        if($permission) {
+            return !$this->permissions()->get()->contains($permission) ?
+                $this->permissions()->attach($permission) : true;
+        }
+
+    }
+
+    public function attachPermissions(array $permissions = [])
+    {
+        if (isset($permissions[0])) {
+            foreach ($permissions as $permission) {
+                if ($permission instanceof Permission)
+                {
+                    !$this->permissions()->get()->contains($permission) ? $this->permissions()->attach($permission) : true;
+                }
+            }
+        }
     }
 }

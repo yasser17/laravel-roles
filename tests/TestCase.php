@@ -1,9 +1,12 @@
 <?php
 
 use Orchestra\Testbench\TestCase as BaseTestCase;
+use Yasser\Roles\Models\Role;
 
 class TestCase extends BaseTestCase
 {
+    protected $adminRole;
+
     protected function getEnvironmentSetUp($app)
     {
         $config = $app['config'];
@@ -49,8 +52,25 @@ class TestCase extends BaseTestCase
         ]);
     }
 
+    /**
+     * Return a admin role
+     *
+     * @return Role
+     */
     protected function getMigrationsSrcPath()
     {
         return realpath(dirname(__DIR__) . '/src/Yasser/migrations');
+    }
+
+    public function createAdminRole()
+    {
+        if ($this->adminRole) {
+            return $this->adminRole;
+        }
+
+        return $this->adminRole = Role::create([
+            'name' => 'Admin',
+            'slug' => 'admin'
+        ]);
     }
 }
