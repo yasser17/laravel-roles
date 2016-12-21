@@ -1,7 +1,6 @@
 <?php
 
 use Yasser\Roles\Models\Permission;
-use Yasser\Roles\Models\Role;
 
 class RolesClassTest extends TestCase
 {
@@ -52,4 +51,44 @@ class RolesClassTest extends TestCase
         $this->assertTrue($role->permissions()->get()->contains($editPermission));
     }
 
+    function test_detach_a_permission_from_a_role()
+    {
+        $role = $this->createAdminRole();
+
+        $createPermission = Permission::create([
+            'name' => 'Create user',
+            'slug' => 'users.create'
+        ]);
+
+        $role->attachPermission($createPermission);
+
+        $this->assertTrue($role->permissions()->get()->contains($createPermission));
+
+        $role->detachPermission($createPermission);
+
+        $this->assertFalse($role->permissions()->get()->contains($createPermission));
+    }
+
+    function test_detach_many_permissions_from_a_role()
+    {
+        $role = $this->createAdminRole();
+
+        $createPermission = Permission::create([
+            'name' => 'Create user',
+            'slug' => 'users.create'
+        ]);
+
+        $editPermission = Permission::create([
+            'name' => 'Edit user',
+            'slug' => 'users.edit'
+        ]);
+
+        $role->attachPermissions([$createPermission, $editPermission]);
+        $this->assertTrue($role->permissions()->get()->contains($createPermission));
+        $this->assertTrue($role->permissions()->get()->contains($editPermission));
+        
+        $role->detachPermissions([$createPermission, $editPermission]);
+        $this->assertFalse($role->permissions()->get()->contains($createPermission));
+        $this->assertFalse($role->permissions()->get()->contains($editPermission));
+    }
 }

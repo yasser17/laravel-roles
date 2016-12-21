@@ -62,6 +62,11 @@ class TestCase extends BaseTestCase
         return realpath(dirname(__DIR__) . '/src/Yasser/migrations');
     }
 
+    /**
+     * Create a admin role
+     *
+     * @return Role
+     */
     public function createAdminRole()
     {
         if ($this->adminRole) {

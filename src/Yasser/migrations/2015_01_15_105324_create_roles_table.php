@@ -17,7 +17,6 @@ class CreateRolesTable extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('description')->nullable();
-            $table->integer('level')->default(1);
             $table->timestamps();
         });
     }

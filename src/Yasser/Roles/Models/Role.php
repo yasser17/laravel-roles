@@ -25,26 +25,55 @@ class Role extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(config('auth.providers.users.model', config('auth.model')));
     }
 
+    /**
+     * Attach a permission to a Role
+     *
+     * @param Permission $permission
+     * @return bool|void
+     */
     public function attachPermission(Permission $permission)
     {
-        if($permission) {
-            return !$this->permissions()->get()->contains($permission) ?
-                $this->permissions()->attach($permission) : true;
-        }
-
+        return !$this->permissions()->get()->contains($permission) ?
+            $this->permissions()->attach($permission) : true;
     }
 
-    public function attachPermissions(array $permissions = [])
+    /**
+     * Attach many permissions to a role
+     *
+     * @param array $permissions
+     */
+    public function attachPermissions(array $permissions)
     {
-        if (isset($permissions[0])) {
-            foreach ($permissions as $permission) {
-                if ($permission instanceof Permission)
-                {
-                    !$this->permissions()->get()->contains($permission) ? $this->permissions()->attach($permission) : true;
-                }
+        foreach ($permissions as $permission) {
+            if ($permission instanceof Permission)
+            {
+                !$this->permissions()->get()->contains($permission) ? $this->permissions()->attach($permission) : true;
+            }
+        }
+    }
+
+    /**
+     * Detach a permission from a role
+     *
+     * @param Permission $permission
+     * @return bool|int
+     */
+    public function detachPermission(Permission $permission)
+    {
+        return $this->permissions()->get()->contains($permission) ?
+            $this->permissions()->detach($permission) :
+            true;
+    }
+
+    public function detachPermissions(array $permissions)
+    {
+        foreach ($permissions as $permission) {
+            if ($permission instanceof Permission)
+            {
+                $this->permissions()->get()->contains($permission) ? $this->permissions()->detach($permission) : true;
             }
         }
     }
