@@ -68,6 +68,11 @@ class Role extends Model
             true;
     }
 
+    /**
+     * Detach many permissions from a role
+     *
+     * @param array $permissions
+     */
     public function detachPermissions(array $permissions)
     {
         foreach ($permissions as $permission) {
