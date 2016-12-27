@@ -4,18 +4,6 @@ use Yasser\Roles\Models\Permission;
 
 class RolesClassTest extends TestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->migrate();
-    }
-
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
-
     function test_can_attach_a_permission_to_role()
     {
         $role = $this->createAdminRole();

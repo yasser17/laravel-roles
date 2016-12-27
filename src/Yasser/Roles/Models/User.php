@@ -31,7 +31,7 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany(config('roles.role'), Role::class);
+        return $this->belongsToMany(config('roles.role'), '\Yasser\Roles\Models\Role');
     }
 
     /**
