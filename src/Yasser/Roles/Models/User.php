@@ -36,7 +36,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if I have a role
+     * Check if the user has a role
      *
      * @param Role $role
      * @return bool
@@ -57,11 +57,22 @@ class User extends Authenticatable
         return !$this->hasRole($role) ? $this->roles()->attach($role) : true;
     }
 
+    /**
+     * Detach a role from a user
+     *
+     * @param Role $role
+     * @return bool|int
+     */
     public function detachRole(Role $role)
     {
         return $this->hasRole($role) ? $this->roles()->detach($role) : true;
     }
 
+    /**
+     * Attach many roles to a User
+     *
+     * @param array $roles
+     */
     public function attachRoles(array $roles)
     {
         foreach ($roles as $role) {
@@ -71,6 +82,11 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * Detach many roles from a user
+     *
+     * @param array $roles
+     */
     public function detachRoles(array $roles)
     {
         foreach ($roles as $role) {
