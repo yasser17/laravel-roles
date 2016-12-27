@@ -1,6 +1,7 @@
 <?php
 namespace Yasser\Roles\Models;
 
+use ClassPreloader\Config;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -31,7 +32,7 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany(config('roles.role'), '\Yasser\Roles\Models\Role');
+        return $this->belongsToMany(config('roles.role', Role::class));
     }
 
     /**
@@ -45,4 +46,26 @@ class User extends Authenticatable
         return !$this->roles()->get()->contains($role) ? $this->roles()->attach($role) : true;
     }
 
+    public function detachRole(Role $role)
+    {
+        return $this->roles()->get()->contains($role) ? $this->roles()->detach($role) : true;
+    }
+
+    public function attachRoles(array $roles)
+    {
+        foreach ($roles as $role) {
+            if ($role instanceof Role) {
+                !$this->roles()->get()->contains($role) ? $this->roles()->attach($role) : true;
+            }
+        }
+    }
+
+    public function detachRoles(array $roles)
+    {
+        foreach ($roles as $role) {
+            if ($role instanceof Role) {
+                $this->roles()->get()->contains($role) ? $this->roles()->detach($role) : true;
+            }
+        }
+    }
 }
