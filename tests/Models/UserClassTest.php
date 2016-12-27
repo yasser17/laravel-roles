@@ -2,6 +2,26 @@
 
 class UserClassTest extends TestCase
 {
+    function test_a_user_has_a_role()
+    {
+        $user = $this->createDefaultUser();
+
+        $role = $this->createAdminRole();
+
+        $user->attachRole($role);
+
+        $this->assertTrue($user->hasRole($role));
+    }
+
+    function test_a_user_does_not_have_a_role()
+    {
+        $user = $this->createDefaultUser();
+
+        $role = $this->createAdminRole();
+
+        $this->assertFalse($user->hasRole($role));
+    }
+
     function test_can_attach_a_role_to_a_user()
     {
         $user = $this->createDefaultUser();
@@ -9,7 +29,7 @@ class UserClassTest extends TestCase
 
         $user->attachRole($role);
 
-        $this->assertTrue($user->roles()->get()->contains($role));
+        $this->assertTrue($user->hasRole($role));
     }
 
     function test_can_detach_a_role_from_a_user()
@@ -20,7 +40,7 @@ class UserClassTest extends TestCase
 
         $user->detachRole($role);
 
-        $this->assertFalse($user->roles()->get()->contains($role));
+        $this->assertFalse($user->hasRole($role));
     }
 
     function test_can_attach_many_roles_to_a_user()
@@ -38,8 +58,8 @@ class UserClassTest extends TestCase
             $roleAdmin, $roleOperator
         ]);
 
-        $this->assertTrue($user->roles()->get()->contains($roleAdmin));
-        $this->assertTrue($user->roles()->get()->contains($roleOperator));
+        $this->assertTrue($user->hasRole($roleAdmin));
+        $this->assertTrue($user->hasRole($roleOperator));
     }
 
     function test_can_detach_many_roles_from_a_user()
@@ -62,7 +82,7 @@ class UserClassTest extends TestCase
             $roleOperator
         ]);
 
-        $this->assertFalse($user->roles()->get()->contains($roleAdmin));
-        $this->assertFalse($user->roles()->get()->contains($roleOperator));
+        $this->assertFalse($user->hasRole($roleAdmin));
+        $this->assertFalse($user->hasRole($roleOperator));
     }
 }

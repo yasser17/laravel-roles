@@ -36,6 +36,17 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if I have a role
+     *
+     * @param Role $role
+     * @return bool
+     */
+    public function hasRole(Role $role)
+    {
+        return $this->roles()->get()->contains($role);
+    }
+
+    /**
      * Method to attach a role to a User
      *
      * @param Role $role
@@ -43,19 +54,19 @@ class User extends Authenticatable
      */
     public function attachRole(Role $role)
     {
-        return !$this->roles()->get()->contains($role) ? $this->roles()->attach($role) : true;
+        return !$this->hasRole($role) ? $this->roles()->attach($role) : true;
     }
 
     public function detachRole(Role $role)
     {
-        return $this->roles()->get()->contains($role) ? $this->roles()->detach($role) : true;
+        return $this->hasRole($role) ? $this->roles()->detach($role) : true;
     }
 
     public function attachRoles(array $roles)
     {
         foreach ($roles as $role) {
             if ($role instanceof Role) {
-                !$this->roles()->get()->contains($role) ? $this->roles()->attach($role) : true;
+                !$this->hasRole($role) ? $this->roles()->attach($role) : true;
             }
         }
     }
@@ -64,7 +75,7 @@ class User extends Authenticatable
     {
         foreach ($roles as $role) {
             if ($role instanceof Role) {
-                $this->roles()->get()->contains($role) ? $this->roles()->detach($role) : true;
+                $this->hasRole($role) ? $this->roles()->detach($role) : true;
             }
         }
     }
