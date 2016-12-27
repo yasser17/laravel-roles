@@ -1,7 +1,6 @@
 <?php
 namespace Yasser\Roles\Models;
 
-use Illuminate\Contracts\Auth\UserProvider as User;
 use Illuminate\Database\Eloquent\Model;
 
 class Permission extends Model
