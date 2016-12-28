@@ -1,6 +1,6 @@
 # Roles and Permissions
 
-- [Installation](#nstallation)
+- [Installation](#installation)
 	- [Composer](#composer)
 	- [Service provider](#service-provider)
 	- [Migrations](#migrations)
@@ -79,7 +79,7 @@ class User extends Authenticatable
 {
     use Notifiable, HasRolesRelations;
 
-
+}
 ```
 
 ### Middleware
@@ -180,5 +180,43 @@ or you can detach many permission from a role
 
 ### Attach and Detach Role to a user
 
+Attach a Role to a user
+
+```php
+	$role = Role::create([
+        'name' => 'Admin',
+        'slug' => 'admin',
+    ]);
+
+    $user->attachRole($role)
+```
+
+Attach many roles to a user
+
+```php
+	$adminRole = Role::create([
+        'name' => 'Admin',
+        'slug' => 'admin',
+    ]);
+
+    $operatorRole = Role::create([
+        'name' => 'Operator',
+        'slug' => 'operator',
+    ]);
+
+    $user->attachRoles([$adminRole, $operatorRole]);
+```
+
+Detach a role from a user
+
+```php
+	$user->detachRole($role)
+```
+
+Detach many roles from a user
+
+```php
+	$user->detachRoles([$adminRole, $operatorRole])
+```
 
 
