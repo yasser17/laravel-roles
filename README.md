@@ -23,7 +23,7 @@ For you can install this package. You should to follow the next steps.
 
 For a installation package you can use the composer command 
 
-composer require yasser/laravel-roles
+	composer require yasser/laravel-roles
 
 or you can pull this package in through Composer file
 
@@ -127,7 +127,7 @@ Add the middleware `VerifyPermission` into app/Http/kernel.php file.
 
 ### Attach and Detach Permissions to a role
 
-You can attach one permitions to a role 
+You can attach one permition to a role 
 
 ```php
 	$createPermission = Permission::create([
@@ -172,7 +172,7 @@ Detach a one permission from a role
 	$role->detachPermission($createRole);
 ```
 
-or you can detach many permission from a role
+or you can detach many permissions from a role
 
 ```php
 	$role->detachPermissions([$createPermission, $deletePermission])
@@ -218,5 +218,3 @@ Detach many roles from a user
 ```php
 	$user->detachRoles([$adminRole, $operatorRole])
 ```
-
-
