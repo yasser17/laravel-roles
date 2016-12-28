@@ -14,7 +14,7 @@
 	- [Check if a user has a role](#check-if-a-user-has-a-role)
 	- [Check if a user has a permission](#check-if-a-user-has-a-permission)
 	- [Blade directives](#blade-directives)
-	- [Middleware](#middleware)
+	- [Middleware functions](#middleware-functions)
 
 
 
@@ -102,6 +102,7 @@ Add the middleware `VerifyPermission` into app/Http/kernel.php file.
     protected $routeMiddleware = [
     	...
 		'verify' => \Yasser\Roles\Middlewares\VerifyPermission::class,
+        'check' => \Yasser\Roles\Middlewares\VerifyRole::class,
     ],
 
 ```
@@ -267,7 +268,7 @@ Detach many roles from a user
     @endCanDo
 ```
 
-### Middleware
+### Middleware functions
 
 ```php
     $role = Role::create([
