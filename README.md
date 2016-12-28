@@ -1,15 +1,20 @@
 # Roles and Permissions
 
-- [Instalation](#nstalation)
+- [Installation](#nstallation)
 	- [Composer](#composer)
 	- [Service provider](#service-provider)
 	- [Migrations](#migrations)
 	- [User trait](#user-trait)
 	- [Middleware](#middleware)
+- [Usage](#usage)
+	- [Create Permissions](#create-permissions)
+	- [Create Roles](#create-roles)
+	- [Attach and Detach Permissions to a role](#attach-and-detach-permissions-to-a-role)
+	- [Attach and Detach Role to a user](#attach-and-detach-role-to-a-user)
 
 
 
-## Instalation
+## Installation
 
 For you can install this package. You should to follow the next steps.
 
@@ -96,3 +101,84 @@ Add the middleware `VerifyPermission` into app/Http/kernel.php file.
     ],
 
 ```
+
+## Usage
+
+### Create Permissions
+
+```php
+	$permission = Permission::create([
+        'name' => 'Create Users',
+        'slug' => 'user.create',
+        'description' => '', //optional
+        'model' => '' //optional
+    ]);
+```
+
+### Create Roles
+
+```php
+	$adminRole = Role::create([
+        'name' => 'Admin',
+        'slug' => 'admin',
+        'description' => ''//optional
+    ]);
+```
+
+### Attach and Detach Permissions to a role
+
+You can attach one permitions to a role 
+
+```php
+	$createPermission = Permission::create([
+        'name' => 'Create Users',
+        'slug' => 'user.create',
+        'description' => '', //optional
+        'model' => '' //optional
+    ]);
+
+    $role = Role::create([
+        'name' => 'Admin',
+        'slug' => 'admin',
+    ]);
+
+    $role->attachPermission($createPermission);
+```
+
+or you can attach many permitions to a role
+
+```php
+	$createPermission = Permission::create([
+        'name' => 'Create Users',
+        'slug' => 'user.create'
+    ]);
+
+	$deletePermission = Permission::create([
+        'name' => 'Delete user',
+        'slug' => 'user.delete'
+    ]);
+
+    $role = Role::create([
+        'name' => 'Admin',
+        'slug' => 'admin',
+    ]);
+
+    $role->attachPermissions([$createPermission, $deletePermission]);
+```
+
+Detach a one permission from a role
+
+```php
+	$role->detachPermission($createRole);
+```
+
+or you can detach many permission from a role
+
+```php
+	$role->detachPermissions([$createPermission, $deletePermission])
+```
+
+### Attach and Detach Role to a user
+
+
+
