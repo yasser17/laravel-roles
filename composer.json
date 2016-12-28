@@ -1,5 +1,5 @@
 {
-    "name": "yasser/roles",
+    "name": "yasser/laravel-roles",
     "description": "Powerful package for handling roles and permissions in Laravel 5.3",
     "type": "library",
     "license": "MIT",
