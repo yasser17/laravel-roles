@@ -29,6 +29,17 @@ class Role extends Model
     }
 
     /**
+     * check if a role has a permission
+     *
+     * @param Permission $permission
+     * @return bool
+     */
+    public function hasPermission(Permission $permission)
+    {
+        return $this->permissions()->get()->contains($permission);
+    }
+
+    /**
      * Attach a permission to a Role
      *
      * @param Permission $permission
@@ -36,7 +47,7 @@ class Role extends Model
      */
     public function attachPermission(Permission $permission)
     {
-        return !$this->permissions()->get()->contains($permission) ?
+        return !$this->hasPermission($permission) ?
             $this->permissions()->attach($permission) : true;
     }
 
@@ -50,7 +61,7 @@ class Role extends Model
         foreach ($permissions as $permission) {
             if ($permission instanceof Permission)
             {
-                !$this->permissions()->get()->contains($permission) ? $this->permissions()->attach($permission) : true;
+                !$this->hasPermission($permission) ? $this->permissions()->attach($permission) : true;
             }
         }
     }
@@ -63,7 +74,7 @@ class Role extends Model
      */
     public function detachPermission(Permission $permission)
     {
-        return $this->permissions()->get()->contains($permission) ?
+        return $this->hasPermission($permission) ?
             $this->permissions()->detach($permission) :
             true;
     }
@@ -78,7 +89,7 @@ class Role extends Model
         foreach ($permissions as $permission) {
             if ($permission instanceof Permission)
             {
-                $this->permissions()->get()->contains($permission) ? $this->permissions()->detach($permission) : true;
+                $this->hasPermission($permission) ? $this->permissions()->detach($permission) : true;
             }
         }
     }

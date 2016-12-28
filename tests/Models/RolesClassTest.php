@@ -4,6 +4,33 @@ use Yasser\Roles\Models\Permission;
 
 class RolesClassTest extends TestCase
 {
+    function test_if_a_role_has_a_permission()
+    {
+        $role = $this->createAdminRole();
+
+        $permission = Permission::create([
+            'name' => 'Create user',
+            'slug' => 'users.create'
+        ]);
+
+        $role->attachPermission($permission);
+
+        $this->assertTrue($role->hasPermission($permission));
+    }
+
+    function test_if_a_role_does_not_have_a_permission()
+    {
+        $role = $this->createAdminRole();
+
+        $permission = Permission::create([
+            'name' => 'Create user',
+            'slug' => 'users.create'
+        ]);
+
+        $this->assertFalse($role->hasPermission($permission));
+    }
+
+
     function test_can_attach_a_permission_to_role()
     {
         $role = $this->createAdminRole();

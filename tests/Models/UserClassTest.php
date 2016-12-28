@@ -85,4 +85,29 @@ class UserClassTest extends TestCase
         $this->assertFalse($user->hasRole($roleAdmin));
         $this->assertFalse($user->hasRole($roleOperator));
     }
+
+    function test_if_user_has_a_permission_slug()
+    {
+        $user = $this->createDefaultUser();
+        $role = $this->createAdminRole();
+        $permission = \Yasser\Roles\Models\Permission::create([
+            'name' => 'Create user',
+            'slug' => 'users.create'
+        ]);
+
+        $role->attachPermission($permission);
+        $user->attachRole($role);
+
+        $this->assertTrue($user->canDo('users.create'));
+    }
+
+    function test_if_user_does_not_have_a_permission_slug()
+    {
+        $user = $this->createDefaultUser();
+        $role = $this->createAdminRole();
+
+        $user->attachRole($role);
+
+        $this->assertFalse($user->canDo('users.create'));
+    }
 }
