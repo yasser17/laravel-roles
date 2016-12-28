@@ -110,4 +110,17 @@ class UserClassTest extends TestCase
 
         $this->assertFalse($user->canDo('users.create'));
     }
+
+    function test_if_can_check_a_user_role()
+    {
+        $user = $this->createDefaultUser();
+        $role = \Yasser\Roles\Models\Role::create([
+            'name' => 'Admin',
+            'slug' => 'admin'
+        ]);
+
+        $user->attachRole($role);
+
+        $this->assertTrue($user->checkRole('admin'));
+    }
 }

@@ -11,6 +11,10 @@
 	- [Create Roles](#create-roles)
 	- [Attach and Detach Permissions to a role](#attach-and-detach-permissions-to-a-role)
 	- [Attach and Detach Role to a user](#attach-and-detach-role-to-a-user)
+	- [Check if a user has a role](#check-if-a-user-has-a-role)
+	- [Check if a user has a permission](#check-if-a-user-has-a-permission)
+	- [Blade directives](#blade-directives)
+	- [Middleware](#middleware)
 
 
 
@@ -217,4 +221,68 @@ Detach many roles from a user
 
 ```php
 	$user->detachRoles([$adminRole, $operatorRole])
+```
+
+### Check if a user has a role
+
+```php
+    $adminRole = Role::create([
+        'name' => 'Admin',
+        'slug' => 'admin',
+    ]);
+
+    $user->checkRole('admin'); //return true or false
+```
+
+### Check if a user has a permission
+
+```php
+    $createPermission = Permission::create([
+        'name' => 'Create Users',
+        'slug' => 'user.create'
+    ]);
+    
+    $user->canDo('user.create');
+```
+
+### Blade directives
+
+```blade
+    $role = Role::create([
+        'name' => 'Admin',
+        'slug' => 'admin',
+    ]);
+
+    @checkRole('admin')
+    ...
+    @endCheckRole
+    
+    $createPermission = Permission::create([
+        'name' => 'Create Users',
+        'slug' => 'user.create'
+    ]);
+    
+    @canDo('user.create')
+        <a href="/users/create">Create a user</a>
+    @endCanDo
+```
+
+### Middleware
+
+```php
+    $role = Role::create([
+        'name' => 'Admin',
+        'slug' => 'admin',
+    ]);
+    
+    Route::get('user/create', ...)->middleware('ckeck:admin');
+```
+
+```php
+    $createPermission = Permission::create([
+        'name' => 'Create Users',
+        'slug' => 'user.create'
+    ]);
+    
+    Route::get('/user/create', ... )->middleware('verify:user.create');
 ```

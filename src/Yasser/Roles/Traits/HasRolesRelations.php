@@ -72,10 +72,29 @@ trait HasRolesRelations
         }
     }
 
+    /**
+     * Method to check if a user has a role
+     *
+     * @param $key
+     * @return bool
+     */
+    public function checkRole($key)
+    {
+        $role = $this->roles()->where('slug', $key)->first();
+
+        return $role ? true : false;
+    }
+
+    /**
+     * Check if a user has a permission
+     *
+     * @param $key
+     * @return bool
+     */
     public function canDo($key)
     {
-        $permission = Permission::with('roles.permissions')
-            ->whereHas('roles.permissions', function($query) use ($key) {
+        $permission = $this->roles()->with('permissions')
+            ->whereHas('permissions', function ($query) use ($key){
                 $query->where('slug', $key);
             })->first();
 

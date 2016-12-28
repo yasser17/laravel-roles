@@ -43,5 +43,13 @@ class RolesServiceProvider extends ServiceProvider
         $blade->directive('endCanDo', function ($expression) {
             return "<?php endif; ?>";
         });
+
+        $blade->directive('checkRole', function ($expression) {
+            return "<?php if (Auth::check() && Auth::user()->checkRole({$expression})): ?>";
+        });
+
+        $blade->directive('endCheckRole', function ($expression) {
+            return "<?php endif; ?>";
+        });
     }
 }
