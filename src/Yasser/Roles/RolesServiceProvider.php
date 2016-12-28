@@ -37,7 +37,7 @@ class RolesServiceProvider extends ServiceProvider
         $blade = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
 
         $blade->directive('canDo', function ($expression) {
-            return "<?php if (Auth::check() && Auth::user()->canDo({$expression}): ?>";
+            return "<?php if (Auth::check() && Auth::user()->canDo({$expression})): ?>";
         });
 
         $blade->directive('endCanDo', function ($expression) {
