@@ -36,7 +36,7 @@ or you can pull this package in through Composer file
 {
 	"require": {
 		...
-		"yasser/laravel-roles": "^0.1.0"
+		"yasser/laravel-roles": "^0.1.2"
 	}
 }
 ```
