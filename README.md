@@ -1,4 +1,5 @@
 # Roles and Permissions
+[![Build Status](https://travis-ci.org/yasser17/laravel-roles.svg?branch=master)](https://travis-ci.org/yasser17/laravel-roles)
 
 - [Installation](#installation)
 	- [Composer](#composer)
