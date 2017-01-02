@@ -113,6 +113,8 @@ Add the middleware `VerifyPermission` into app/Http/kernel.php file.
 ### Create Permissions
 
 ```php
+	use Yasser\Roles\Models\Permission;
+
 	$permission = Permission::create([
         'name' => 'Create Users',
         'slug' => 'user.create',
@@ -124,6 +126,8 @@ Add the middleware `VerifyPermission` into app/Http/kernel.php file.
 ### Create Roles
 
 ```php
+	use Yasser\Roles\Models\Role;
+
 	$adminRole = Role::create([
         'name' => 'Admin',
         'slug' => 'admin',
